@@ -19,19 +19,19 @@ public class AnagramCheck {
 		JavaRDD<String> lines = sc.textFile(
 				"E:\\code\\git-2018\\spark-codes\\spark-data-processing\\src\\main\\java\\rdd\\practice\\sparkDataProcessing\\anagram-inputs",
 				1);
-		//System.out.println(lines.collect());
+		// System.out.println(lines.collect());
 		List<Tuple2<String, String>> results = new ArrayList<Tuple2<String, String>>();
-		JavaPairRDD<String, String> rdd = lines.flatMapToPair(word->{
-			char[] wordChars = word.toCharArray(); 
-            Arrays.sort(wordChars); 
-            String sortedWord = new String(wordChars); 
-            results.add(new Tuple2<String,String>(sortedWord, word));
-            return (Iterator<Tuple2<String, String>>) results;
+		JavaPairRDD<String, String> rdd = lines.flatMapToPair(word -> {
+			char[] wordChars = word.toCharArray();
+			Arrays.sort(wordChars);
+			String sortedWord = new String(wordChars);
+			results.add(new Tuple2<String, String>(sortedWord, word));
+			return (Iterator<Tuple2<String, String>>) results;
 		});
-		
+
 		List<Tuple2<String, String>> anagramList = rdd.collect();
 		for (Tuple2<String, String> tuple2 : anagramList) {
-			System.out.println(tuple2._1+"-"+tuple2._2);
+			System.out.println(tuple2._1 + "-" + tuple2._2);
 		}
 		sc.close();
 	}
